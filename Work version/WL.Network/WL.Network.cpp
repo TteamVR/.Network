@@ -1,8 +1,18 @@
 #include "WL.Network.h"
 
-namespace _SERVER
-{
 
+namespace
+{
+	char szEmpty[1024];
+	
+	const char *MESSAGE_CSP        = "CONNECTIONS_SUCCESSFULLY_PERFORMED";	
+	const char *MESSAGE_ERROR_NAME = 	 "NAME ERROR: NAME IS NOT UNIQUE";
+}
+
+
+namespace _SERVER
+{	
+	
 	///////////////////////////////////////////////////////////////////////////
 	void MessageHandler(__int64 IndexCompounds)						 		 //
 	{
@@ -10,10 +20,28 @@ namespace _SERVER
 	}	
 	
 	
+	
+	///////////////////////////////////////////////////////////////////////////
+	SERVER::SERVER()														 //
+	{
+		
+	}
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////
+	SERVER::SERVER(const char *Name, const char* IP, unsigned __int8 Port):  // 	
+	SERER_DATA.Name(Name), SERER_DATA.IP(IP), SERER_DATA.Port(Port) 
+	{
+	
+	}
+	
+	
+	
 	///////////////////////////////////////////////////////////////////////////
 	bool SERVER::Set(const char *Name, const char* IP, unsigned __int8 Port) //
 	{
-		
+					
 		//////////////////////////////////////////////////////
 		//													//
 		//        Create a socket and set to listen         //
@@ -49,14 +77,29 @@ namespace _SERVER
 		                                                                       //
 		if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR))) // 
 		{																	   //
-			send(new_connection, "Hello", 6, 0);
+			if(recv(new_connection, szMsg, sizeof(szMsg), 0))
+			{
+				for(__int64 cnt = 0; cnt < quantity_compound; cnt++)
+					if(strcmp(User[cnt].Name, szMsg) == 0)
+					{	
+						send(new_connection, MESSAGE_ERROR_NAME, 
+						strlen(MESSAGE_ERROR_NAME), 0);	
+						strcpy(szMsg, szEmpty);
+					}
+				
+				USER_TEMPLATE.compound = new_connection;					
+				USER_TEMPLATE.Name     =          szMsg;				
+				
+				send(new_connection, MESSAGE_CSP, 
+				strlen(MESSAGE_CSP), 0);
+			}
 			
-		/*	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MessageHandler, 		   //
+			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MessageHandler, 		   //
 			(LPVOID)(++quantity_compound), 0, 0);	 						   //
 																			   //
-			USER_TEMPLATE.compound = new_connection;						   //
 																			   //
-			User.push(USER_TEMPLATE);	*/									   //
+			User.push(USER_TEMPLATE);										   //
+			strcpy(szMsg, szEmpty);											   //
 		}																	   //
 																			   //
 		/////////////////////////////////////////////////////////////////////////	
