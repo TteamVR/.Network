@@ -8,16 +8,19 @@ namespace _SERVER
 	{
 	private: 
 		
-		struct _SERER_DATA
+		struct _SERVER_DATA
 		{
 			unsigned __int8 Port;
-			char   	 	  IP[16];
-			char  	  	   *Name;	
-		}SERER_DATA;
+			const char 	     *IP;
+			const char	   *Name;
+			bool 		   Using;
+		}SERVER_DATA;
 		
 		__int64 quantity_compound;
 		char 		  szMsg[1024];
-
+		
+		bool 			  proceed;
+		
 		struct USER
 		{
 			SOCKET compound;
@@ -32,8 +35,12 @@ namespace _SERVER
 		
 		SERVER();
 		SERVER(const char *Name, const char* IP, unsigned __int8 Port);
-				
-		bool Set(const char *Name, const char* IP, unsigned __int8 Port);
+		
+		void SetData(const char *Name, const char* IP, unsigned __int8 Port);
+	
+		const char* Set();	
+		const char* Set(const char *Name, const char* IP, unsigned __int8 Port);
+		
 		unsigned __int64 Delete(bool Auto, const char* LastMessage);
 	};
 }

@@ -27,4 +27,6 @@ int main()
 		printf("Server message: %s", szMessage);
 	}	
 	
+	system("pause");
+	
 }
