@@ -46,9 +46,9 @@ int main()
 	
 	SOCKET new_connection;
 	
-	if((newConnection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR))) 
+	if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR))) 
 	{
-		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)UserHandler, (LPVOID)(quantity_compound), 0, 0);		
+	//	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)UserHandler, (LPVOID)(quantity_compound), 0, 0);		
 	}
 
 
