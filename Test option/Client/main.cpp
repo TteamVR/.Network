@@ -2,6 +2,7 @@
 #include <winsock2.h>
 
 char szMessage[256];
+char szEmpty[256];
 
 int main() 
 {														
@@ -22,11 +23,17 @@ int main()
 	
 	send(Connection, "Name", 6, 0);
 	
-	if(recv(Connection, szMessage, sizeof(szMessage), 0))
-	{
-		printf("Server message: %s", szMessage);
-	}	
-	
+	while(true)
+		if(recv(Connection, szMessage, sizeof(szMessage), 0))
+		{
+			printf("Server message: %s", szMessage);
+			
+			if(strcmp(szMessage, "SERVER_WAS_SUCCESSFULLY_REMOVED") == 0)
+				break;
+			
+			strcpy(szMessage, szEmpty);
+		}	
+		
 	system("pause");
 	
 }

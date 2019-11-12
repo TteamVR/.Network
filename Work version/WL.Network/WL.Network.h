@@ -1,4 +1,5 @@
 #include <winsock2.h>
+#include <process.h>
 
 #include "List/List.h"
 
@@ -18,6 +19,7 @@ namespace _SERVER
 		
 		__int64 quantity_compound;
 		char 		  szMsg[1024];
+		char        szStatus[256];
 		
 		bool 			  proceed;
 		
@@ -36,9 +38,12 @@ namespace _SERVER
 		SERVER();
 		SERVER(const char *Name, const char* IP, unsigned __int8 Port);
 		
+		const char* GetStatus();
+		
 		void SetData(const char *Name, const char* IP, unsigned __int8 Port);
 	
 		const char* Set();	
+		void SetInThread(void* pParams);
 		const char* Set(const char *Name, const char* IP, unsigned __int8 Port);
 		
 		unsigned __int64 Delete(bool Auto, const char* LastMessage);

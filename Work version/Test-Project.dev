@@ -10,7 +10,7 @@ PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
-CppCompiler=
+CppCompiler=_@@_-std=gnu++0x_@@_
 Linker=D:/Install/Dev-Cpp/MinGW32/lib/libws2_32.a_@@_
 IsCpp=1
 Icon=

@@ -10,7 +10,7 @@ LIBS     = -L"D:/Install/Dev-Cpp/MinGW32/lib" -L"D:/Install/Dev-Cpp/SFML-2.2/lib
 INCS     = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
 CXXINCS  = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
 BIN      = Test-Project.exe
-CXXFLAGS = $(CXXINCS)   -masm=intel
+CXXFLAGS = $(CXXINCS)  -std=gnu++0x   -masm=intel
 CFLAGS   = $(INCS)   -masm=intel
 RM       = rm -f
 

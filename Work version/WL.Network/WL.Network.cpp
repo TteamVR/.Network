@@ -5,11 +5,17 @@ namespace
 {
 	char szEmpty[1024];
 	
-	const char *MESSAGE_CSP           = "CONNECTIONS_SUCCESSFULLY_PERFORMED";
-	const char *MESSAGE_SC            = 			"SUCCESSFULLY_COMPLETED";
-	const char *MESSAGE_DS            =    "SERVER_WAS_SUCCESSFULLY_REMOVED";	
-	const char *MESSAGE_ERROR_NAME    = 	"NAME ERROR: NAME IS NOT UNIQUE";
-	const char *MESSAGE_ERROR_SETDATA = "DATA SETUP ERROR: YOU DID NOT INSTALL DATA TO INSTALL DATA FOR THE SERVER USE THE FUNCTION 'SetData'";
+	namespace Sysetm_CM
+	{
+		const char *COMMAND_UDC 		  = 			  "USER_DISABLE_COMMAND";  
+		
+		const char *MESSAGE_CSP           = "CONNECTIONS_SUCCESSFULLY_PERFORMED";
+		const char *MESSAGE_SC            = 			"SUCCESSFULLY_COMPLETED";
+		const char *MESSAGE_DS            =    "SERVER_WAS_SUCCESSFULLY_REMOVED";	
+		const char *MESSAGE_ERROR_NAME    = 	"NAME ERROR: NAME IS NOT UNIQUE";
+		const char *MESSAGE_ERROR_SETDATA = "DATA SETUP ERROR: YOU DID NOT INSTALL DATA TO INSTALL DATA FOR THE SERVER USE THE FUNCTION 'SetData'";
+		
+	}
 }
 
 
@@ -31,7 +37,8 @@ namespace _SERVER
 		SERVER_DATA.Using = false;
 		proceed           =  true;
 		
-		strcpy(szMsg, szEmpty);	
+		strcpy(szMsg,    szEmpty);	
+		strcpy(szStatus, szEmpty);	
 	}
 	
 	
@@ -49,7 +56,16 @@ namespace _SERVER
 		SERVER_DATA.Using =  true;
 		
 		strcpy(szMsg, szEmpty);	
+		strcpy(szStatus, szEmpty);
 	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	const char* SERVER::GetStatus()												    //
+	{
+		return szStatus;	
+	}		
 	
 	
 	
@@ -65,12 +81,26 @@ namespace _SERVER
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////
-	const char* SERVER::Set()													    //
+	const char* SERVER::Set()					             					    //
 	{
 		if(SERVER_DATA.Using == true)
 			Set(SERVER_DATA.Name, SERVER_DATA.IP, SERVER_DATA.Port);	
 		else 
-			return MESSAGE_ERROR_SETDATA;
+		{	
+			strcpy(szStatus, Sysetm_CM::MESSAGE_ERROR_SETDATA);
+			return Sysetm_CM::MESSAGE_ERROR_SETDATA;
+		}
+	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	void SERVER::SetInThread(void* pParams)										    //
+	{
+		if(SERVER_DATA.Using == true)
+			Set(SERVER_DATA.Name, SERVER_DATA.IP, SERVER_DATA.Port);
+		else
+			strcpy(szStatus, Sysetm_CM::MESSAGE_ERROR_SETDATA);
 	}
 	
 	
@@ -114,6 +144,7 @@ namespace _SERVER
 		
 		while(proceed)                                                             
 		{	
+			Sleep(10);
 			L_IgnoringConnect:
 				
 			if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR)))  
@@ -123,8 +154,9 @@ namespace _SERVER
 					for(__int64 cnt = 0; cnt < quantity_compound; cnt++)
 						if(strcmp(User[cnt].Name, szMsg) == 0)
 						{	
-							send(new_connection, MESSAGE_ERROR_NAME, 
-							strlen(MESSAGE_ERROR_NAME), 0);	
+							send(new_connection, Sysetm_CM::MESSAGE_ERROR_NAME, 
+							strlen(Sysetm_CM::MESSAGE_ERROR_NAME), 0);	
+							
 							strcpy(szMsg, szEmpty);
 							
 							goto L_IgnoringConnect;
@@ -133,23 +165,44 @@ namespace _SERVER
 					USER_TEMPLATE.compound = new_connection;					
 					USER_TEMPLATE.Name     =          szMsg;				
 					
-					send(new_connection, MESSAGE_CSP, 
-					strlen(MESSAGE_CSP), 0);
+					send(new_connection, Sysetm_CM::MESSAGE_CSP, 
+					strlen(Sysetm_CM::MESSAGE_CSP), 0);
 				}
 				
 				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MessageHandler, 		 
 				(LPVOID)(++quantity_compound), 0, 0);	 						  
-																				   
-																				    
+																				   													    
 				User.push(USER_TEMPLATE);										   
 				strcpy(szMsg, szEmpty);											   
 			}																	    
 		}																	    
 		
 		if(proceed == false)
-			return MESSAGE_DS;
+		{	
+			for(__int64 cnt = 0; cnt < quantity_compound; cnt++)	
+			{	
+				send(User[cnt].compound, szMsg, strlen(szMsg), 0);
+				send(User[cnt].compound, Sysetm_CM::COMMAND_UDC, strlen(Sysetm_CM::COMMAND_UDC), 0);
+			}					
+			
+			strcpy(szStatus, Sysetm_CM::MESSAGE_DS);
+			
+			//return MESSAGE_DS;
+		}
 		
 		//////////////////////////////////////////////////////////////////////////	
 																   
 	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	unsigned __int64 SERVER::Delete(bool Auto, const char* LastMessage)				//
+	{
+		proceed = false;
+		strcpy(szMsg, LastMessage);	
+	}
+	
+	
+	
 }
