@@ -22,13 +22,11 @@ namespace WL_NETWORK
 			bool 		 	  Using;
 			
 		}SERVER_DATA;
-	
-		unsigned __int64 quantity_compound;
 		
-		char 			 	   szMsg[1024];
-		char        		 szStatus[256];
+		char   szMsg[1024];
+		char szStatus[256];
 		
-		bool 			  		   proceed;
+		bool 	   proceed;
 
 		List<USER> 	  User;
 		USER USER_TEMPLATE;

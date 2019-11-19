@@ -4,7 +4,6 @@ namespace
 {
 	List<WL_NETWORK::USER> 		  User; 
 	bool 	    			   proceed;
-	unsigned __int64 quantity_compound;
 }
 
 
@@ -13,7 +12,7 @@ namespace WL_NETWORK
 		//////////////////////////////////////////////////////////////////////////////////
 		void MessageHandler(__int64 IndexCompounds)						 		  	    //
 		{
-			char    szMsg[1024];
+			char    szMsg[CONSTANTS::MESSAGE_SIZE];
 			char Recipient[256];
 			
 			while(::proceed)
@@ -26,13 +25,13 @@ namespace WL_NETWORK
 						szMsg[cnt]	   = 	   ' ';
 					}	
 					
-					for(int cnt = 0; cnt < ::quantity_compound; cnt++)
+					for(int cnt = 0; cnt < ::User.size(); cnt++)
 					{
 						if(strcmp(::User[cnt].Name, Recipient) == 0)
 						{
 							send(::User[cnt].compound, szMsg, strlen(szMsg), 0);	
 						}	
-						else if(cnt == (::quantity_compound - 1)){} // write message in the file		
+						else if(cnt == (::User.size() - 1)){} // write message in the file		
 					}
 				}
 				
@@ -45,7 +44,6 @@ namespace WL_NETWORK
 		///////////////////////////////////////////////////////////////////////////////
 		SERVER::SERVER()														   	 //
 		{
-			quantity_compound =     0;
 			SERVER_DATA.Using = false;
 			proceed           =  true;
 			
@@ -58,7 +56,6 @@ namespace WL_NETWORK
 		//////////////////////////////////////////////////////////////////////////////////
 		SERVER::SERVER(const char *Name, const char* IP, unsigned __int8 Port)    	    //
 		{
-			quantity_compound =     0;
 			SERVER_DATA.Using = false;
 			proceed           =  true;
 			
@@ -138,7 +135,7 @@ namespace WL_NETWORK
 					{																	   	 //
 						if(recv(new_connection, szMsg, sizeof(szMsg), 0))			 		 //
 						{																     //
-							for(unsigned __int64 cnt = 0; cnt < quantity_compound; cnt++)    //
+							for(unsigned __int64 cnt = 0; cnt < User.size(); cnt++)  	 	 //
 								if(strcmp(User[cnt].Name, szMsg) == 0)						 //
 								{															 //
 									send(new_connection, Sysetm_CM::MESSAGE_ERROR_NAME, 	 //
@@ -153,10 +150,7 @@ namespace WL_NETWORK
 							USER_TEMPLATE.Name     =          szMsg;						 //	
 																							 //	
 							CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MessageHandler, 		 //	 
-							(LPVOID)(++quantity_compound), 0, 0);	 						 //	  
-																							 //
-																						     //	
-							::quantity_compound = quantity_compound;						 //
+							(LPVOID)(User.size()), 0, 0);	 		    					 //	  
 																							 //	   													    
 							User.push(USER_TEMPLATE);										 //		   
 							::User.push(USER_TEMPLATE);										 //
@@ -174,7 +168,7 @@ namespace WL_NETWORK
 																							 //
 				if(proceed == false)														 //  
 				{																			 //
-					for(unsigned __int64 cnt = 0; cnt < quantity_compound; cnt++)			 //	
+					for(unsigned __int64 cnt = 0; cnt < User.size(); cnt++)					 //	
 					{																		 // 		
 						send(User[cnt].compound, szMsg, strlen(szMsg), 0);					 //			
 						send(User[cnt].compound, Sysetm_CM::COMMAND_UDC, 					 //		

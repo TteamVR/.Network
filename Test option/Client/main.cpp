@@ -1,39 +1,50 @@
+#include "C:\\Users\\admin\\Desktop\\C++\\Socket-s\\WinLego-Network\\Work version\\WL.Network\\WL.Network.h"
 #include <stdio.h>
-#include <winsock2.h>
 
-char szMessage[256];
-char szEmpty[256];
+char    	Name[256];
+char     Message[256];
+char   Recipient[256];
+char 		  *Answer;
+
+unsigned __int64 Time;
+__int8		   choose;
 
 int main() 
-{														
-	WSAData wsaData;								
-	WORD DLLVersion = MAKEWORD(2, 1);			
-	WSAStartup(DLLVersion, &wsaData); 				
-														
-	SOCKADDR_IN addr;								
-	int nSizeOfADDR      =  sizeof(addr);				
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");				
-	addr.sin_port 		 = 	 htons(1);			
-	addr.sin_family 	 =       AF_INET;		
-														
-	SOCKET Connection = socket(AF_INET, SOCK_STREAM, 0);
+{	
+	printf("Enter your name:");
+	scanf("%s", Name);
 	
-	while(connect(Connection, (SOCKADDR*)&addr, sizeof(addr)) != 0) 
-		printf("Error: connect to server !\n");	
+	WL_NETWORK::CLIENT Client((const char*)Name);
 	
-	send(Connection, "Name", 6, 0);
-	
-	while(true)
-		if(recv(Connection, szMessage, sizeof(szMessage), 0))
-		{
-			printf("Server message: %s", szMessage);
-			
-			if(strcmp(szMessage, "SERVER_WAS_SUCCESSFULLY_REMOVED") == 0)
-				break;
-			
-			strcpy(szMessage, szEmpty);
-		}	
+	while(true) 
+	{
+		Answer = (char*)Client.ConnectToServer("127.0.0.1", 1);
+		printf("Answer: %s\n", Answer);
 		
-	system("pause");
+		if(strcmp(Answer, "CONNECTIONS_SUCCESSFULLY_PERFORMED") == 0)	break;
+			
+		Sleep(1000);
+	}
 	
+	printf("\nChoose 'true' for write message or 'false' for get message: ");
+	scanf("%d", choose);	
+	
+	if(choose == 1)
+	{
+		printf("\nEnter message: ");
+		scanf("%s", Message);
+	
+		printf("\nEnter recipient: ");
+		scanf("%s", Recipient);
+	
+		Client.SendMessage(Message, Recipient);
+	}
+	else
+	{
+		while(true)
+		{
+			Client.GetMessage(Message, Recipient, &Time);
+			printf("Message: %s;\n Sender: %s;\n Time: %d;", Message, Recipient, Time);
+		}	
+	}
 }

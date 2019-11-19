@@ -3,7 +3,7 @@
 namespace
 {
 	using namespace WL_NETWORK;
-	
+
 	
 	
 	///////////////////////////////////////////////////////////////////////////////
@@ -109,22 +109,45 @@ namespace WL_NETWORK
 		}
 		else return Sysetm_CM::MESSAGE_ERROR_SETNAME;
 	}
-	
+
 	
 	
 	///////////////////////////////////////////////////////////////////////////////
-	bool CLIENT::GetMessage(char *Message, char *Sender, __int64 Time)			 //
+	int CLIENT::SendMessage(const char *Message, const char *Recipient)	     	 //	
 	{
-			
+		char szMsg[CONSTANTS::MESSAGE_SIZE];
+		wsprintf(szMsg, "%s|%s|%s|%d", Recipient, Name, Message, time(NULL));
+		
+		return send(compound, szMsg, strlen(szMsg), 0);
 	}
 	
 	
 	
 	///////////////////////////////////////////////////////////////////////////////
-	bool CLIENT::SendMessage(const char *Message, const char *Recipient)	     //	
-	{
-		char *szMsg[1024];
-		wsprintf(szMsg, "%s|%s|%s|%s", Recipient, Name, Message, szTime);
+	int CLIENT::GetMessage(char *Message, char *Sender, unsigned __int64 *Time)  //
+	{	
+		int work_result = 0;
+		
+		char  *pArray[4];
+		char  pTime[256];
+		char szMsg[CONSTANTS::MESSAGE_SIZE];
+		
+		pArray[1] =  Sender;
+		pArray[2] = Message;
+		pArray[3] =   pTime;
+
+		work_result = recv(compound, szMsg, sizeof(szMsg), 0);
+
+		if(work_result)
+		{
+			ParserMessage(szMsg, pArray);
+			
+			strcpy( Sender, pArray[1]);
+			strcpy(Message, pArray[2]);
+			*Time = atoi(pArray[3]);
+		}
+	
+		return work_result;
 	}
 }
 

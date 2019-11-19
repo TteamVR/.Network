@@ -1,4 +1,5 @@
 #include <winsock2.h>
+#include <time.h>
 
 #include "C:\Users\admin\Desktop\C++\Socket-s\WinLego-Network\Work version\WL.Network\List\List.h"
 
@@ -21,8 +22,9 @@ namespace WL_NETWORK
 	{
 		namespace ASCII { extern const char SPACE; }
 		
-		extern const char	   NEXT; 
-		extern const __int8 NULLPtR;
+		extern const char	   			      NEXT; 
+		extern const __int8 	 		   NULLPtR;
+		extern const unsigned __int16 MESSAGE_SIZE;
 	}
 	
 	extern char  szEmpty[1024];

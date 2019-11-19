@@ -19,8 +19,9 @@ namespace WL_NETWORK
 	{
 		namespace ASCII { const char SPACE = 32; }
 		
-		const char NEXT       = '|'; 
-		const __int8 NULLPtR  =   0;
+		const char NEXT    				     = '|'; 
+		const __int8 NULLPtR 			     =   0;
+		const unsigned __int16 MESSAGE_SIZE = 1024;
 	}
 	
 	char  szEmpty[1024];

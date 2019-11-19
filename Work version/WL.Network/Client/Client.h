@@ -17,9 +17,9 @@ namespace WL_NETWORK
 		 	void Rename(const char *Name);
 		 	
 			const char* ConnectToServer(const char *IP, unsigned __int8 Port);
-			
-			bool GetMessage(char *Message, char *Sender, __int64 Time);
-			bool SendMessage(const char *Message, const char *Recipient);  
+		
+			int SendMessage(const char *Message, const char *Recipient);  
+			int GetMessage(char *Message, char *Sender, unsigned __int64 *Time);
 	};	
 	
 }

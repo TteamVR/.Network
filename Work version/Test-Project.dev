@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=000000000000000000000100000
-UnitCount=8
+UnitCount=7
 
 [VersionInfo]
 Major=1
@@ -60,7 +60,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit3]
+[Unit2]
 FileName=WL.Network\Client\Client.cpp
 CompileCpp=1
 Folder=Test-Project
@@ -70,7 +70,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit3]
 FileName=WL.Network\Client\Client.h
 CompileCpp=1
 Folder=Test-Project
@@ -80,7 +80,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit5]
+[Unit4]
 FileName=WL.Network\Global\Global.cpp
 CompileCpp=1
 Folder=Test-Project
@@ -90,7 +90,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit6]
+[Unit5]
 FileName=WL.Network\Global\Global.h
 CompileCpp=1
 Folder=Test-Project
@@ -100,7 +100,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit7]
+[Unit6]
 FileName=WL.Network\Server\Server.cpp
 CompileCpp=1
 Folder=Test-Project
@@ -110,28 +110,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit8]
+[Unit7]
 FileName=WL.Network\Server\Server.h
-CompileCpp=1
-Folder=Test-Project
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit9]
-FileName=WL.Network\Server\Server.h
-CompileCpp=1
-Folder=Test-Project
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit2]
-FileName=WL.Network\WL.Network.h
 CompileCpp=1
 Folder=Test-Project
 Compile=1

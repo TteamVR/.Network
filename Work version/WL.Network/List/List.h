@@ -23,7 +23,8 @@ private:
 		
 	}*Last;
 	
-	__int64 ItemCounter;
+	
+	unsigned __int64 ItemCounter;
 	
 public:
 	List(): Last(NULLPTR), ItemCounter(0) {}
@@ -36,7 +37,7 @@ public:
 	bool clear();
 	bool empty();
 
-	__int64 size();
+	unsigned __int64 size();
 };
 
 
@@ -113,7 +114,7 @@ bool List<DataTemplate>::clear() 					       //
 
 /////////////////////////////////////////////////////////////
 template <typename DataTemplate>					       //
-__int64 List<DataTemplate>::size() 					       //
+unsigned __int64 List<DataTemplate>::size()			       //
 {
 	return ItemCounter; 
 }

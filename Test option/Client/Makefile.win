@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o $(RES)
-LINKOBJ  = main.o $(RES)
+OBJ      = main.o "../../Work\ version/WL.Network/Client/Client.o" "../../Work\ version/WL.Network/Global/Global.o" "../../Work\ version/WL.Network/Server/Server.o" $(RES)
+LINKOBJ  = main.o "../../Work version/WL.Network/Client/Client.o" "../../Work version/WL.Network/Global/Global.o" "../../Work version/WL.Network/Server/Server.o" $(RES)
 LIBS     = -L"D:/Install/Dev-Cpp/MinGW32/lib" -L"D:/Install/Dev-Cpp/SFML-2.2/lib" -static-libstdc++ -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system D:/Install/Dev-Cpp/MinGW32/lib/libws2_32.a  -s 
 INCS     = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
 CXXINCS  = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
@@ -27,3 +27,12 @@ $(BIN): $(OBJ)
 
 main.o: main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+"../../Work\ version/WL.Network/Client/Client.o": ../../Work\ version/WL.Network/Client/Client.cpp
+	$(CPP) -c "../../Work version/WL.Network/Client/Client.cpp" -o "../../Work version/WL.Network/Client/Client.o" $(CXXFLAGS)
+
+"../../Work\ version/WL.Network/Global/Global.o": ../../Work\ version/WL.Network/Global/Global.cpp
+	$(CPP) -c "../../Work version/WL.Network/Global/Global.cpp" -o "../../Work version/WL.Network/Global/Global.o" $(CXXFLAGS)
+
+"../../Work\ version/WL.Network/Server/Server.o": ../../Work\ version/WL.Network/Server/Server.cpp
+	$(CPP) -c "../../Work version/WL.Network/Server/Server.cpp" -o "../../Work version/WL.Network/Server/Server.o" $(CXXFLAGS)
