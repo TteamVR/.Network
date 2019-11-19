@@ -18,16 +18,17 @@ namespace WL_NETWORK
 			unsigned __int8    Port;
 			const char 	   	    *IP;
 			const char	   	  *Name;
-			bool 		 	  Using;
 			const char *LastMessage;
-		}SERVER_DATA;
+			bool 		 	  Using;
 			
-		__int64 quantity_compound;
+		}SERVER_DATA;
+	
+		unsigned __int64 quantity_compound;
 		
-		char 		  szMsg[1024];
-		char        szStatus[256];
+		char 			 	   szMsg[1024];
+		char        		 szStatus[256];
 		
-		bool 			  proceed;
+		bool 			  		   proceed;
 
 		List<USER> 	  User;
 		USER USER_TEMPLATE;

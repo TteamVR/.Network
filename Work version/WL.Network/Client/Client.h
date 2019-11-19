@@ -2,26 +2,24 @@
 
 namespace WL_NETWORK	
 {
-	namespace _CLIENT
+	class CLIENT
 	{
-		class CLIENT
-		{
-			private:
-				
-				SOCKET compound;
-				char 	  *Name;
-							
-			public: 
-				
-				CLIENT();
-				CLIENT(const char *Name);
-				
-			 	void Rename(const char *Name);
-			 	
-				const char *ConnectToServer(const char *IP, unsigned __int8 Port);
-				
-				char* GetMessage();
-				void SendMessage();  
-		};	
-	}
+		private:
+			
+			SOCKET compound;
+			char 	  *Name;
+						
+		public: 
+			
+			CLIENT();
+			CLIENT(const char *Name);
+			
+		 	void Rename(const char *Name);
+		 	
+			const char* ConnectToServer(const char *IP, unsigned __int8 Port);
+			
+			bool GetMessage(char *Message, char *Sender, __int64 Time);
+			bool SendMessage(const char *Message, const char *Recipient);  
+	};	
+	
 }

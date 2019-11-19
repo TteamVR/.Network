@@ -11,8 +11,18 @@ namespace WL_NETWORK
 		extern const char *MESSAGE_CSP;
 		extern const char *MESSAGE_SC;
 		extern const char *MESSAGE_DS;	
+		extern const char *MESSAGE_ERROR_CTS;
 		extern const char *MESSAGE_ERROR_NAME;
 		extern const char *MESSAGE_ERROR_SETDATA;
+		extern const char *MESSAGE_ERROR_SETNAME;
+	}
+	
+	namespace CONSTANTS
+	{
+		namespace ASCII { extern const char SPACE; }
+		
+		extern const char	   NEXT; 
+		extern const __int8 NULLPtR;
 	}
 	
 	extern char  szEmpty[1024];
