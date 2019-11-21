@@ -4,6 +4,8 @@ namespace
 {
 	List<WL_NETWORK::USER> 		  User; 
 	bool 	    			   proceed;
+	
+	int C;
 }
 
 
@@ -135,6 +137,7 @@ namespace WL_NETWORK
 					{																	   	 //
 						if(recv(new_connection, szMsg, sizeof(szMsg), 0))			 		 //
 						{																     //
+							printf("User.size() = %d;\n::User.size() = %d;\n", User.size(), ::User.size());
 							for(unsigned __int64 cnt = 0; cnt < User.size(); cnt++)  	 	 //
 								if(strcmp(User[cnt].Name, szMsg) == 0)						 //
 								{															 //

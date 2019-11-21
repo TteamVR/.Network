@@ -1,5 +1,10 @@
 #include "Client.h"
 
+namespace 
+{
+	char szAnswer[256];	
+}
+
 namespace
 {
 	using namespace WL_NETWORK;
@@ -104,7 +109,9 @@ namespace WL_NETWORK
 			else														 //
 				send(compound, Name, strlen(Name), 0); 					 //
 																		 //
-			return Sysetm_CM::MESSAGE_CSP;								 //
+			recv(compound, szAnswer, sizeof(szAnswer), 0);				 //
+																		 //
+			return szAnswer;											 //
 			///////////////////////////////////////////////////////////////
 		}
 		else return Sysetm_CM::MESSAGE_ERROR_SETNAME;

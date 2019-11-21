@@ -1,6 +1,8 @@
 #include <winsock2.h>
 #include <time.h>
 
+#include <stdio.h>
+
 #include "C:\Users\admin\Desktop\C++\Socket-s\WinLego-Network\Work version\WL.Network\List\List.h"
 
 namespace WL_NETWORK

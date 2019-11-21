@@ -7,14 +7,14 @@ char   Recipient[256];
 char 		  *Answer;
 
 unsigned __int64 Time;
-__int8		   choose;
+int		 	   choose;
 
 int main() 
 {	
 	printf("Enter your name:");
 	scanf("%s", Name);
 	
-	WL_NETWORK::CLIENT Client((const char*)Name);
+	WL_NETWORK::CLIENT Client(Name);
 	
 	while(true) 
 	{
@@ -26,25 +26,36 @@ int main()
 		Sleep(1000);
 	}
 	
-	printf("\nChoose 'true' for write message or 'false' for get message: ");
-	scanf("%d", choose);	
+	system("pause");
+/*	
+	printf("Enter '1' for write message or enter '2' for get message: ");
+	scanf("%d", choose);
 	
-	if(choose == 1)
+	switch(choose)
 	{
-		printf("\nEnter message: ");
-		scanf("%s", Message);
+		case 1: 
+				
+				while(true)
+				{
+					printf("Enter recipient: ");
+					scanf("%s", Recipient);
+				
+					printf("Enter message: ");
+					scanf("%s", Message);
+				
+					Client.SendMessage(Message, Recipient);				
+				}			
+				break;
+				
+		case 2:
+				while(true)
+				{
+					Client.GetMessage(Message, Recipient, &Time);
+					printf("Message: %s;\n Sender: %s;\n Time: %d;", Message, Recipient, Time);
+					Sleep(10);
+				}
+				
+				break;
+	}	*/		
 	
-		printf("\nEnter recipient: ");
-		scanf("%s", Recipient);
-	
-		Client.SendMessage(Message, Recipient);
-	}
-	else
-	{
-		while(true)
-		{
-			Client.GetMessage(Message, Recipient, &Time);
-			printf("Message: %s;\n Sender: %s;\n Time: %d;", Message, Recipient, Time);
-		}	
-	}
 }
