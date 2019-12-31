@@ -1,0 +1,35 @@
+# Project: server
+# Makefile created by Dev-C++ 5.2.0.1
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = main.o ../wl.network/server/server.o ../wl.network/global/global.o $(RES)
+LINKOBJ  = main.o ../wl.network/server/server.o ../wl.network/global/global.o $(RES)
+LIBS     = -L"D:/Install/Dev-Cpp/MinGW32/lib" -L"D:/Install/Dev-Cpp/SFML-2.2/lib" -static-libstdc++ -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system D:/Install/Dev-Cpp/MinGW32/lib/libws2_32.a  -s 
+INCS     = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
+CXXINCS  = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
+BIN      = server.exe
+CXXFLAGS = $(CXXINCS)   -masm=intel
+CFLAGS   = $(INCS)   -masm=intel
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before server.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "server.exe" $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+../wl.network/server/server.o: ../wl.network/server/server.cpp
+	$(CPP) -c ../wl.network/server/server.cpp -o ../wl.network/server/server.o $(CXXFLAGS)
+
+../wl.network/global/global.o: ../wl.network/global/global.cpp
+	$(CPP) -c ../wl.network/global/global.cpp -o ../wl.network/global/global.o $(CXXFLAGS)
