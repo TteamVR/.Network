@@ -18,7 +18,7 @@ namespace
 		
 			for(int cnt = 0; cnt < ::User.size(); cnt++) 
 			{
-				if(cnt != index) send(::User[cnt].compound, msg, sizeof(msg), 0);
+			/*	if(cnt != index)*/ send(::User[cnt].compound, msg, sizeof(msg), 0);
 			}
 		}			
 	}	

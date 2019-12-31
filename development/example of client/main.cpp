@@ -4,5 +4,20 @@
 int main() 
 {
 	wl_network::CLIENT Client;
-	Client.JoinServer("127.0.0.1", 1);
+	
+	if(Client.JoinServer("127.0.0.1", 1) == true)	
+	{	
+		printf("\tYou have joined the server!\n\n");
+		
+		//Client.SendMessage("1");
+		
+		while(true)
+		{	
+			printf("LastMessage: %s\n", Client.GetLastMessage());
+			Sleep(1000);
+		}
+	}
+	else printf("\tYou have not joined the server!\n");
+	
+	system("pause");	
 }

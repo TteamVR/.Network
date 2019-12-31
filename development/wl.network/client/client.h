@@ -11,6 +11,9 @@ namespace wl_network
 		
 	public:
 
-		void JoinServer(const char *IP, unsigned __int8 port);	
+		bool JoinServer(const char *IP, unsigned __int8 port);	
+		
+		void SendMessage(const char *Message);
+		char* GetLastMessage();
 	};
 } 

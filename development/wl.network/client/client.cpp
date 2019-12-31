@@ -4,18 +4,19 @@
 #include <stdio.h>	    //
 //////////////////////////
 
-namespace{SOCKET compound;}
+namespace
+{
+	SOCKET compound; 
+	char msg[1024/*MESSAGE_SIZE*/];
+}
 
 namespace
 {
 	void ClientHandler() 
 	{
-		char msg[1024/*MESSAGE_SIZE*/];
-		
 		while(true) 
 		{
 			recv(compound, msg, sizeof(msg), 0);
-			printf("\nMessage: %s\n", msg);
 		}
 	}
 }
@@ -49,13 +50,30 @@ namespace wl_network
 		compound = socket(AF_INET, SOCK_STREAM, 0);					 	  //
 																	 	  //
 		if(connect(compound, (SOCKADDR*)&addr, sizeof(addr)) != false) 	  //
-			MessageBox(0, "Error: failed connect to server", "Error", 0); //
+			return false;												  //
 																		  //
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 		  //	 
 		0, 0, 0);														  //												 
 																		  //
 		////////////////////////////////////////////////////////////////////														 	
 	}
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////	
+	void CLIENT::SendMessage(const char *Message)										 //
+	{
+		send(compound, Message, strlen(Message), 0);	
+	}
+	
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////	
+	char* CLIENT::GetLastMessage()														 //
+	{
+		return msg;	
+	}
+	
 	
 	
 	//..............................MAIN METHODS - END..................................//
