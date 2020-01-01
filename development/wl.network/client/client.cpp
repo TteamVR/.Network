@@ -15,8 +15,11 @@ namespace
 	void ClientHandler() 
 	{
 		while(true) 
-		{
-			recv(compound, msg, sizeof(msg), 0);
+		{	
+		/*	strcpy(msg, "");						   
+			recv(compound, msg, sizeof(msg), 0);	   
+			printf("Message from server: %s\n", msg); 
+			Sleep(1000);*/
 		}
 	}
 }
@@ -52,6 +55,28 @@ namespace wl_network
 		if(connect(compound, (SOCKADDR*)&addr, sizeof(addr)) != false) 	  //
 			return false;												  //
 																		  //
+		
+		/////////////////////////////////////////////
+												   //
+		char msg[256];							   //
+		strcpy(msg, "");						   //
+		recv(compound, msg, sizeof(msg), 0);	   //
+		printf("Message from server: %s\n", msg);  //
+												   //
+		
+		while(true)
+		{									   
+			strcpy(msg, "");						   
+			recv(compound, msg, sizeof(msg), 0);	   
+			printf("Message from server: %s\n", msg); 
+			Sleep(1000);		 
+		}
+	
+		/////////////////////////////////////////////
+		
+		
+		
+																		  
 		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 		  //	 
 		0, 0, 0);														  //												 
 																		  //
@@ -63,7 +88,7 @@ namespace wl_network
 	///////////////////////////////////////////////////////////////////////////////////////	
 	void CLIENT::SendMessage(const char *Message)										 //
 	{
-		send(compound, Message, strlen(Message), 0);	
+		send(compound, Message, sizeof(Message), 0);	
 	}
 	
 	

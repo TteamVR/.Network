@@ -11,11 +11,13 @@ int main()
 		
 		//Client.SendMessage("1");
 		
-		while(true)
+		while(true){}
+		
+	/*	while(true)
 		{	
 			printf("LastMessage: %s\n", Client.GetLastMessage());
 			Sleep(1000);
-		}
+		}*/
 	}
 	else printf("\tYou have not joined the server!\n");
 	

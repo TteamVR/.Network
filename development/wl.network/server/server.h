@@ -9,7 +9,7 @@ namespace wl_network
 	{	
 	private:
 		
-		List<USER> User;
+		List<USER> 	  User;
 		USER USER_TEMPLATE; 
 		
 		const char 		 *IP;
