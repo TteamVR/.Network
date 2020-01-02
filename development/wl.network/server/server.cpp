@@ -7,8 +7,6 @@
 namespace
 {
 	List<wl_network::USER> User; 
-	
-	SOCKET s; 
 }
 
 namespace
@@ -23,7 +21,7 @@ namespace
 		{	
 			for(int cnt = 0; cnt < ::User.size(); cnt++) 
 			{
-				send(::User[cnt].compound, "SERVER_MESSAGE_CONNECT", sizeof("SERVER_MESSAGE_CONNECT"), 0); 
+				send(::User[cnt].compound, "SERVER_MESSAGE", sizeof("SERVER_MESSAGE"), 0); 
 			}
 		
 			Sleep(1000);
@@ -104,17 +102,7 @@ namespace wl_network
 			new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR);		 //
 																					 //
 			if(new_connection != false) 											 //
-			{		
-				
-				////////////////////////////////////////////////////////////////////////////////////////
-																									  //
-				send(new_connection, "SERVER_MESSAGE_CONNECT", sizeof("SERVER_MESSAGE_CONNECT"), 0);  //
-																									  //
-				s = new_connection;																	  //
-																									  //
-				////////////////////////////////////////////////////////////////////////////////////////
-				
-																					 //	
+			{																		 //	
 				USER_TEMPLATE.compound = new_connection;							 //
 																					 //
 				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 //

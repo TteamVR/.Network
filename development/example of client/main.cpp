@@ -8,18 +8,10 @@ int main()
 	if(Client.JoinServer("127.0.0.1", 1) == true)	
 	{	
 		printf("\tYou have joined the server!\n\n");
-		
-		//Client.SendMessage("1");
-		
-		while(true){}
-		
-	/*	while(true)
-		{	
-			printf("LastMessage: %s\n", Client.GetLastMessage());
-			Sleep(1000);
-		}*/
+		while(true) {}
 	}
-	else printf("\tYou have not joined the server!\n");
+	else 
+		printf("\tYou have not joined the server!\n");
 	
 	system("pause");	
 }

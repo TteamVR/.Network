@@ -4,6 +4,7 @@
 #include <stdio.h>	    //
 //////////////////////////
 
+
 namespace
 {
 	SOCKET compound; 
@@ -12,14 +13,14 @@ namespace
 
 namespace
 {
-	void ClientHandler() 
+	void MessageHandler() 
 	{
 		while(true) 
 		{	
-		/*	strcpy(msg, "");						   
+			strcpy(msg, "");						   
 			recv(compound, msg, sizeof(msg), 0);	   
 			printf("Message from server: %s\n", msg); 
-			Sleep(1000);*/
+			Sleep(1000);
 		}
 	}
 }
@@ -27,8 +28,8 @@ namespace
 namespace wl_network
 {
 	//....................................MAIN METHODS..................................//
-	
-	
+
+
 	
 	///////////////////////////////////////////////////////////////////////////////////////	
 	bool CLIENT::JoinServer(const char *IP, unsigned __int8 port)						 //	
@@ -50,35 +51,13 @@ namespace wl_network
 		addr.sin_port 		 = 	 htons(port);						 	  //
 		addr.sin_family 	 =       AF_INET; 			 		     	  //
 																	  	  //
-		compound = socket(AF_INET, SOCK_STREAM, 0);					 	  //
+		::compound = compound = socket(AF_INET, SOCK_STREAM, 0);		  //
 																	 	  //
 		if(connect(compound, (SOCKADDR*)&addr, sizeof(addr)) != false) 	  //
 			return false;												  //
-																		  //
-		
-		/////////////////////////////////////////////
-												   //
-		char msg[256];							   //
-		strcpy(msg, "");						   //
-		recv(compound, msg, sizeof(msg), 0);	   //
-		printf("Message from server: %s\n", msg);  //
-												   //
-		
-		while(true)
-		{									   
-			strcpy(msg, "");						   
-			recv(compound, msg, sizeof(msg), 0);	   
-			printf("Message from server: %s\n", msg); 
-			Sleep(1000);		 
-		}
-	
-		/////////////////////////////////////////////
-		
-		
-		
-																		  
-		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 		  //	 
-		0, 0, 0);														  //												 
+																		  //														
+		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MessageHandler, 	  	  //	 
+		0, 0, 0);													   	  //												 
 																		  //
 		////////////////////////////////////////////////////////////////////														 	
 	}
