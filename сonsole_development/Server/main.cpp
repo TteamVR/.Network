@@ -24,7 +24,7 @@ void ClientHandler(/*__int64 index*/) 												 //
 		{
 			closesocket(/*User[index].*/compound);
 			break;
-    	}
+		}
 		
 		printf("msg[1024] = %s\n", msg);
 			

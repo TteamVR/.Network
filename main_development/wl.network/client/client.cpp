@@ -63,7 +63,7 @@ namespace wl_network
 	///////////////////////////////////////////////////////////////////////////////////////	
 	void CLIENT::SendMessage(const char *Message)										 //
 	{
-		send(compound, Message, sizeof(Message), 0);	
+		send(compound, Message, 1024, 0);	
 	}
 	
 	
