@@ -1,9 +1,5 @@
 #include "client.h"
 
-//////////////////////////
-#include <stdio.h>	    //
-//////////////////////////
-
 
 namespace
 {
@@ -16,11 +12,9 @@ namespace
 	void MessageHandler() 
 	{
 		while(true) 
-		{	
-			strcpy(msg, "");						   
+		{							   
 			recv(compound, msg, sizeof(msg), 0);	   
-			printf("Message from server: %s\n", msg); 
-			Sleep(1000);
+			Sleep(1/*PAUSE*/);
 		}
 	}
 }
@@ -60,6 +54,8 @@ namespace wl_network
 		0, 0, 0);													   	  //												 
 																		  //
 		////////////////////////////////////////////////////////////////////														 	
+	
+		return true;
 	}
 	
 	

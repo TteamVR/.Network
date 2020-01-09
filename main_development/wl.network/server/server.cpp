@@ -1,12 +1,15 @@
 #include "server.h"
 
-//////////////////////
-#include <stdio.h>  //
-//////////////////////
+///////////////////////
+#include <stdio.h>   //
+#include <iostream>  //
+using namespace std; //
+///////////////////////
 
 namespace
 {
 	List<wl_network::USER> User; 
+	char msg[1024/*MESSAGE_SIZE*/];	
 }
 
 namespace
@@ -14,25 +17,18 @@ namespace
 	///////////////////////////////////////////////////////////////////////////////////////	
 	void ClientHandler(__int64 index) 									 		  	     //
 	{	
-		char msg[MESSAGE_SIZE];			
-		strcpy(msg, "");
-		
 		while(true) 
 		{	
-			for(int cnt = 0; cnt < ::User.size(); cnt++) 
-			{
-				send(::User[cnt].compound, "SERVER_MESSAGE", sizeof("SERVER_MESSAGE"), 0); 
-			}
-		
-			Sleep(1000);
-			
-			/*
 			recv(::User[index].compound, msg, sizeof(msg), 0);
+			cout << "msg[1024] = " << msg << endl;
 			
-			for(int cnt = 0; cnt < ::User.size(); cnt++) 
+			/*for(int cnt = 0; cnt < ::User.size(); cnt++) 
 			{
-				if(cnt != index) send(::User[cnt].compound, msg, sizeof(msg), 0);
+				//if(cnt != index) 
+				send(::User[cnt].compound, msg, sizeof(msg), 0);
 			}*/
+			
+			Sleep(PAUSE);
 		}			
 	}	
 }
@@ -86,7 +82,7 @@ namespace wl_network
 		listen(sListen, SOMAXCONN);							//
 															//		
 		//////////////////////////////////////////////////////	
-	
+
 		
 		///////////////////////////////////////////////////////////////////////////////
 		//																	    	 //		
@@ -124,8 +120,6 @@ namespace wl_network
 	
 	
 	//..............................MAIN METHODS - END..................................//
-	
-
 }
 
 
