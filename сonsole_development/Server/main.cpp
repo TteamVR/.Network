@@ -10,12 +10,22 @@ List<USER>    User;*/
 SOCKET 	  compound;
 char 	 msg[1024];
 
-
-void ClientHandler(/*__int64 index*/) 									 		  	     //
+///////////////////////////////////////////////////////////////////////////////////////	
+void ClientHandler(/*__int64 index*/) 												 //						 		  	    
 {	
+	int execution_result = 0;	
+	
 	while(true) 
 	{	
-		recv(/*User[index].*/compound, msg, sizeof(msg), 0);
+		execution_result = recv(/*User[index].*/compound, msg, sizeof(msg), 0);
+			
+		if(execution_result == SOCKET_ERROR &&                            
+		   WSAGetLastError() == WSAECONNRESET)
+		{
+			closesocket(/*User[index].*/compound);
+			break;
+    	}
+		
 		printf("msg[1024] = %s\n", msg);
 			
 		Sleep(1);			
@@ -45,39 +55,43 @@ int main()
 	listen(sListen, SOMAXCONN);							//
 														//		
 	//////////////////////////////////////////////////////	
+	
 		
-	///////////////////////////////////////////////////////////////////////////////
-	//																	    	 //		
-	//     Establishing a socket connection and accepting initial parameters   	 //	
-	//						      from the client							     //
-	//																	     	 //	
-	///////////////////////////////////////////////////////////////////////////////
-																		  		 //
-	SOCKET new_connection;	                                                	 //
-																				 //
-/*	while(true)                                                             	 //
-	{*/																			 //
-		new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR);		 //
-																				 //
-		if(new_connection != false) 											 //
-		{																		 //	
-			/*USER_TEMPLATE.*/compound = new_connection;						 //
-																				 //
-		//	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 //
-		//	/*(LPVOID)(User.size())*/0, 0, 0);									 //
-																				 //
-			printf("New client her number is \n"/*, User.size()*/);				 //
-																				 //
-			/*User.push(USER_TEMPLATE);											 //
-			::User.push(USER_TEMPLATE);	*/										 //			
-		}								 										 //
-																				 // 
-		Sleep(1);																 //
-	//}																	   		 //
-																				 //
-	///////////////////////////////////////////////////////////////////////////////	
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//																	    	 			//		
+	//     		Establishing a socket connection and accepting initial parameters   	 	//	
+	//						     		 from the client							     	//
+	//																	     	 			//	
+	//////////////////////////////////////////////////////////////////////////////////////////
+																		  		 			//
+	SOCKET new_connection;	                                                	 			//
+																				 			//
+/*	while(true)                                                             	 			//
+	{*/																						//
+																				            //
+		if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR)) != false) 	//										 //
+		{																		 			//	
+			/*USER_TEMPLATE.*/compound = new_connection;						 			//
+																				 			//
+		//	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 			//
+		//	/*(LPVOID)(User.size())*/0, 0, 0);												//
+																				 			//
+			printf("New client her number is \n"/*, User.size()*/);							//
+																				 			//
+			/*User.push(USER_TEMPLATE);											 			//
+			::User.push(USER_TEMPLATE);	*/										 			//			
+		}								 										 			//
+																				 			// 
+		Sleep(1);																 			//
+	//}																	   		 			//
+																				 			//
+	//////////////////////////////////////////////////////////////////////////////////////////
+
 	
-	ClientHandler();
-	
+	/////////////////////////////////////////
+	ClientHandler();					   //
+	/////////////////////////////////////////
+
+
 	system("pause");
 }

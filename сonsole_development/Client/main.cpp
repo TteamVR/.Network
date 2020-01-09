@@ -18,7 +18,7 @@ void MessageHandler()
 ///////////////////////////////////////////////////////////////////////////////////////	
 void SendMessage(const char *Message)												 //
 {
-	send(compound, Message, sizeof(Message), 0);	
+	send(compound, Message, 1024, 0);	
 }
 	
 	
@@ -66,7 +66,6 @@ int main()
 	{
 		printf("Enter the message: ");
 		scanf("%s", _msg);
-		
 		SendMessage(_msg);
 	}
 	
