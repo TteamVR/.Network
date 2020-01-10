@@ -1,33 +1,49 @@
 #include <winsock2.h>
 #include <stdio.h>
 
-//#include "C:\\Users\\admin\\Desktop\\C++\\IMPORTANT\\My Libraries\\BC\\BC.h"
+#include "C:\\Users\\admin\\Desktop\\C++\\IMPORTANT\\My Libraries\\BC\\BC.h"
 
 /*struct USER{SOCKET compound;};
 USER USER_TEMPLATE;
 List<USER>    User;*/
 
+
+/////////////////////////////////////
+SOCKET s[10000];				   //
+unsigned __int64 cnt;			   //
+/////////////////////////////////////
+
 SOCKET 	  compound;
 char 	 msg[1024];
 
 ///////////////////////////////////////////////////////////////////////////////////////	
-void ClientHandler(/*__int64 index*/) 												 //						 		  	    
+void ClientHandler(unsigned __int64 index) 											 //						 		  	    
 {	
 	int execution_result = 0;	
-	
+
 	while(true) 
 	{	
-		execution_result = recv(/*User[index].*/compound, msg, sizeof(msg), 0);
+		execution_result = recv(/*User[index]*/s[index]/*.compound*/, msg, sizeof(msg), 0);
 			
 		if(execution_result == SOCKET_ERROR &&                            
 		   WSAGetLastError() == WSAECONNRESET)
 		{
-			closesocket(/*User[index].*/compound);
+			/////////////////////////////////////////////////////////
+			printf("client number %d is disconnected;\n", index);  //
+			/////////////////////////////////////////////////////////
+			
+			cnt--;
+			
+			closesocket(/*User[index]*/s[index]/*.compound*/);
 			break;
 		}
+				
+		for(unsigned __int64 ClientCnt = 0; ClientCnt < cnt; ClientCnt++)
+		{	
+			if(ClientCnt != index)
+				send(/*User[index]*/s[ClientCnt]/*.compound*/, msg, sizeof(msg), 0);
+		}		
 		
-		printf("msg[1024] = %s\n", msg);
-			
 		Sleep(1);			
 	}
 }
@@ -66,32 +82,28 @@ int main()
 																		  		 			//
 	SOCKET new_connection;	                                                	 			//
 																				 			//
-/*	while(true)                                                             	 			//
-	{*/																						//
-																				            //
+	while(true)                                                             	 			//
+	{																						//
 		if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR)) != false) 	//										 //
 		{																		 			//	
-			/*USER_TEMPLATE.*/compound = new_connection;						 			//
+			//USER_TEMPLATE.compound = new_connection;						 				//
 																				 			//
-		//	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 			//
-		//	/*(LPVOID)(User.size())*/0, 0, 0);												//
+			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 			//
+			(LPVOID)(/*User.size()*/cnt), 0, 0);											//
+																							//
+			s[cnt] = new_connection;														//
 																				 			//
-			printf("New client her number is \n"/*, User.size()*/);							//
+			printf("New client her number is %d;\n", cnt++/*User.size()*/);					//
 																				 			//
-			/*User.push(USER_TEMPLATE);											 			//
-			::User.push(USER_TEMPLATE);	*/										 			//			
+			/*User.push(USER_TEMPLATE);	*/										 			//
+			/*::User.push(USER_TEMPLATE);*/										 			//			
 		}								 										 			//
 																				 			// 
 		Sleep(1);																 			//
-	//}																	   		 			//
+	}																	   		 			//
 																				 			//
 	//////////////////////////////////////////////////////////////////////////////////////////
 
-	
-	/////////////////////////////////////////
-	ClientHandler();					   //
-	/////////////////////////////////////////
-
-
 	system("pause");
 }
+

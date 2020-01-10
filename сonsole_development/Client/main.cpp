@@ -5,11 +5,15 @@ SOCKET compound;
 char  msg[1024];
 char _msg[1024];
 
+char _msg_[1024];
+char empty[1024];
+
 void MessageHandler() 
 {
 	while(true) 
 	{							   
-		recv(compound, msg, sizeof(msg), 0);	   
+		strcpy(msg, empty);
+		recv(compound, msg, sizeof(msg), 0);
 		Sleep(1);
 	}
 }
@@ -29,6 +33,30 @@ char* GetLastMessage()																 //
 	return msg;	
 }
 
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+
+void function()
+{
+	while(true)
+	{
+		strcpy(_msg_, GetLastMessage());
+		
+		if(strcmp(_msg_, empty) != 0)	
+			printf("Message from server: %s;\n\n", GetLastMessage());
+				
+		strcpy(_msg_, empty);
+		
+		//Sleep(1);
+	}	
+}
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
 
 
 int main()
@@ -60,7 +88,11 @@ int main()
 	////////////////////////////////////////////////////////////////////	
 	
 	
+	//////////////////////////////////
 	/////////START/////////
+	//////////////////////////////////
+	
+	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)function, 0, 0, 0);
 	
 	while(true)
 	{
@@ -69,6 +101,7 @@ int main()
 		SendMessage(_msg);
 	}
 	
+	//////////////////////////////////
 	/////////END///////////
-	
+	//////////////////////////////////
 }
