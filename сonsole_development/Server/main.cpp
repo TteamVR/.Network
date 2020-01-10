@@ -10,14 +10,15 @@ List<USER>    User;*/
 
 /////////////////////////////////////
 SOCKET s[10000];				   //
-unsigned __int64 cnt;			   //
+unsigned int cnt;				   //
 /////////////////////////////////////
+
 
 SOCKET 	  compound;
 char 	 msg[1024];
 
 ///////////////////////////////////////////////////////////////////////////////////////	
-void ClientHandler(unsigned __int64 index) 											 //						 		  	    
+void ClientHandler(unsigned int index) 												 //						 		  	    
 {	
 	int execution_result = 0;	
 
@@ -37,13 +38,15 @@ void ClientHandler(unsigned __int64 index) 											 //
 			closesocket(/*User[index]*/s[index]/*.compound*/);
 			break;
 		}
-				
-		for(unsigned __int64 ClientCnt = 0; ClientCnt < cnt; ClientCnt++)
-		{	
+
+		for(unsigned int ClientCnt = 1; ClientCnt <= cnt; ClientCnt++)
+		{
 			if(ClientCnt != index)
+			{
 				send(/*User[index]*/s[ClientCnt]/*.compound*/, msg, sizeof(msg), 0);
+			}
 		}		
-		
+
 		Sleep(1);			
 	}
 }
@@ -89,11 +92,11 @@ int main()
 			//USER_TEMPLATE.compound = new_connection;						 				//
 																				 			//
 			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 			//
-			(LPVOID)(/*User.size()*/cnt), 0, 0);											//
+			(LPVOID)(/*User.size()*/++cnt), 0, 0);											//
 																							//
 			s[cnt] = new_connection;														//
 																				 			//
-			printf("New client her number is %d;\n", cnt++/*User.size()*/);					//
+			printf("New client her number is %d;\n\n", cnt/*User.size()*/);					//
 																				 			//
 			/*User.push(USER_TEMPLATE);	*/										 			//
 			/*::User.push(USER_TEMPLATE);*/										 			//			

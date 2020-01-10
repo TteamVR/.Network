@@ -12,7 +12,7 @@ void MessageHandler()
 {
 	while(true) 
 	{							   
-		strcpy(msg, empty);
+		strcpy(msg, "");
 		recv(compound, msg, sizeof(msg), 0);
 		Sleep(1);
 	}
