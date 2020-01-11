@@ -28,7 +28,7 @@ void ClientHandler(unsigned int index) 												 //
 			
 		if(execution_result == SOCKET_ERROR &&                            
 		   WSAGetLastError() == WSAECONNRESET)
-		{
+		{ 
 			/////////////////////////////////////////////////////////
 			printf("client number %d is disconnected;\n", index);  //
 			/////////////////////////////////////////////////////////
@@ -38,15 +38,15 @@ void ClientHandler(unsigned int index) 												 //
 			closesocket(/*User[index]*/s[index]/*.compound*/);
 			break;
 		}
-
-		for(unsigned int ClientCnt = 1; ClientCnt <= cnt; ClientCnt++)
+		
+		for(unsigned int ClientCnt = 1; ClientCnt <= cnt/*User.size()*/; ClientCnt++)
 		{
 			if(ClientCnt != index)
 			{
 				send(/*User[index]*/s[ClientCnt]/*.compound*/, msg, sizeof(msg), 0);
 			}
 		}		
-
+	
 		Sleep(1);			
 	}
 }

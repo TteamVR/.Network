@@ -1,17 +1,17 @@
 # Project: Server
 # Makefile created by Dev-C++ 5.2.0.1
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 OBJ      = main.o $(RES)
 LINKOBJ  = main.o $(RES)
-LIBS     = -L"D:/Install/Dev-Cpp/MinGW32/lib" -L"D:/Install/Dev-Cpp/SFML-2.2/lib" -static-libstdc++ -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system D:/Install/Dev-Cpp/MinGW32/lib/libws2_32.a  -s 
+LIBS     = -L"D:/Install/Dev-Cpp/MinGW32/lib" -L"D:/Install/Dev-Cpp/SFML-2.2/lib" -static-libstdc++ -static-libgcc -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system D:/Install/Dev-Cpp/MinGW32/lib/libws2_32.a  -g3 
 INCS     = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
 CXXINCS  = -I"D:/Install/Dev-Cpp/MinGW32/include"  -I"D:/Install/Dev-Cpp/SFML-2.2/include" 
 BIN      = Server.exe
-CXXFLAGS = $(CXXINCS)   -masm=intel
-CFLAGS   = $(INCS)   -masm=intel
+CXXFLAGS = $(CXXINCS)   -masm=intel -g3
+CFLAGS   = $(INCS)   -masm=intel -g3
 RM       = rm -f
 
 .PHONY: all all-before all-after clean clean-custom

@@ -1,10 +1,11 @@
 #include "client.h"
 
-
 namespace
 {
-	SOCKET compound; 
-	char msg[1024/*MESSAGE_SIZE*/];
+	SOCKET 		   compound; 
+	char 		 copy[1024];
+	char  		  msg[1024];
+	unsigned int NewMessage;
 }
 
 namespace
@@ -14,6 +15,10 @@ namespace
 		while(true) 
 		{							   
 			recv(compound, msg, sizeof(msg), 0);	   
+			
+			if(strlen(msg) != 0)			
+				::NewMessage++;				
+					
 			Sleep(1/*PAUSE*/);
 		}
 	}
@@ -26,7 +31,7 @@ namespace wl_network
 
 	
 	///////////////////////////////////////////////////////////////////////////////////////	
-	bool CLIENT::JoinServer(const char *IP, unsigned __int8 port)						 //	
+	bool CLIENT::JoinServer(const char *IP, unsigned __int16 port)						 //	
 	{
 	
 		////////////////////////////////////////////////////////////////////
@@ -63,7 +68,7 @@ namespace wl_network
 	///////////////////////////////////////////////////////////////////////////////////////	
 	void CLIENT::SendMessage(const char *Message)										 //
 	{
-		send(compound, Message, 1024, 0);	
+		send(compound, Message, 1024, 0);
 	}
 	
 	
@@ -71,7 +76,11 @@ namespace wl_network
 	///////////////////////////////////////////////////////////////////////////////////////	
 	char* CLIENT::GetLastMessage()														 //
 	{
-		return msg;	
+		NewMessage--;	
+			 
+		strcpy(copy, msg);
+		strcpy(msg, "");
+		return copy;	
 	}
 	
 	

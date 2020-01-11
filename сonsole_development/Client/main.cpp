@@ -4,16 +4,21 @@
 SOCKET compound; 
 char  msg[1024];
 char _msg[1024];
+char copy[1024];
+int  NewMessage;
 
 char _msg_[1024];
-char empty[1024];
+
 
 void MessageHandler() 
 {
 	while(true) 
-	{							   
-		strcpy(msg, "");
+	{					   
 		recv(compound, msg, sizeof(msg), 0);
+	
+		if(strlen(msg) != 0)			
+			NewMessage++;				
+		
 		Sleep(1);
 	}
 }
@@ -29,8 +34,12 @@ void SendMessage(const char *Message)												 //
 
 ///////////////////////////////////////////////////////////////////////////////////////	
 char* GetLastMessage()																 //
-{
-	return msg;	
+{	
+	NewMessage--;	
+			 
+	strcpy(copy, msg);
+	strcpy(msg, "");
+	return copy;	
 }
 
 
@@ -43,14 +52,10 @@ void function()
 {
 	while(true)
 	{
-		strcpy(_msg_, GetLastMessage());
-		
-		if(strcmp(_msg_, empty) != 0)	
+		if(NewMessage > 0)
 			printf("Message from server: %s;\n\n", GetLastMessage());
-				
-		strcpy(_msg_, empty);
 		
-		//Sleep(1);
+		Sleep(1);
 	}	
 }
 
