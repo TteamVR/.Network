@@ -19,6 +19,6 @@ namespace wl_network
 		
 		SERVER(const char *IP, unsigned __int16 port);
 		
-		void Set(); 
+		void set(); 
 	};
 } 
