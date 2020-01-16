@@ -3,6 +3,6 @@
 
 int main() 
 {
-	wl_network::SERVER Server("127.0.0.1", 1);
+	wl_network::SERVER Server("127.0.0.1", 1234);
 	Server.Set();
 }

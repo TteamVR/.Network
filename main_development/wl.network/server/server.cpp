@@ -2,33 +2,60 @@
 
 ///////////////////////
 #include <stdio.h>   //
-#include <iostream>  //
+/*#include <iostream>  //
 using namespace std; //
-///////////////////////
+///////////////////////*/
+
+
+/////////////////////////////////////
+namespace 						   //
+{								   //
+	SOCKET s[10000];			   //
+	/*unsigned*/ int cnt;		   //	
+}								   //
+/////////////////////////////////////
+
 
 namespace
 {
-	List<wl_network::USER> User; 
+//	List<wl_network::USER> User; 
 	char msg[1024/*MESSAGE_SIZE*/];	
 }
+
 
 namespace
 {	
 	///////////////////////////////////////////////////////////////////////////////////////	
-	void ClientHandler(__int64 index) 									 		  	     //
+	void ClientHandler(int index) 										 		  	     //
 	{	
+		int execution_result = 0;	
+	
 		while(true) 
 		{	
-			recv(::User[index].compound, msg, sizeof(msg), 0);
-			cout << "msg[1024] = " << msg << endl;
+			execution_result = recv(/*User[index]*/s[index]/*.compound*/, msg, sizeof(msg), 0);
+				
+			if(execution_result == SOCKET_ERROR &&                            
+			   WSAGetLastError() == WSAECONNRESET)
+			{ 
+				/////////////////////////////////////////////////////////
+				printf("client number %d is disconnected;\n", index);  //
+				/////////////////////////////////////////////////////////
+				
+				/*cnt--;*/
+				
+				closesocket(/*User[index]*/s[index]/*.compound*/);
+				break;
+			}
 			
-			/*for(int cnt = 0; cnt < ::User.size(); cnt++) 
+			for(/*unsigned*/ int ClientCnt = 1; ClientCnt <= cnt/*User.size()*/; ClientCnt++)
 			{
-				//if(cnt != index) 
-				send(::User[cnt].compound, msg, sizeof(msg), 0);
-			}*/
-			
-			Sleep(PAUSE);
+				if(ClientCnt != index)
+				{		
+					send(/*User[index]*/s[ClientCnt]/*.compound*/, msg, sizeof(msg), 0);
+				}
+			}		
+		
+			Sleep(1);			
 		}			
 	}	
 }
@@ -43,7 +70,7 @@ namespace wl_network
 							
 																								  
 	///////////////////////////////////////////////////////////////////////////////////////				  
-	SERVER::SERVER(const char *IP, unsigned __int8 port): IP(IP), port(port){} 			 //				  
+	SERVER::SERVER(const char *IP, unsigned __int16 port): IP(IP), port(port){} 		 //				  
 	
 	
 	
@@ -84,37 +111,36 @@ namespace wl_network
 		//////////////////////////////////////////////////////	
 
 		
-		///////////////////////////////////////////////////////////////////////////////
-		//																	    	 //		
-		//     Establishing a socket connection and accepting initial parameters   	 //	
-		//						      from the client							     //
-		//																	     	 //	
-		///////////////////////////////////////////////////////////////////////////////
-																			  		 //
-		SOCKET new_connection;	                                                	 //
-																					 //
-		while(true)                                                             	 //
-		{																			 //
-			new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR);		 //
-																					 //
-			if(new_connection != false) 											 //
-			{																		 //	
-				USER_TEMPLATE.compound = new_connection;							 //
-																					 //
-				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 //
-				(LPVOID)(User.size()), 0, 0);										 //
-																					 //
-				printf("New client her number is %d\n", User.size());				 //
-																					 //
-				User.push(USER_TEMPLATE);											 //
-				::User.push(USER_TEMPLATE);											 //			
-			}								 										 //
-																					 // 
-			Sleep(PAUSE);															 //
-		}																	   		 //
-																					 //
-		///////////////////////////////////////////////////////////////////////////////	
-			
+		//////////////////////////////////////////////////////////////////////////////////////////
+		//																	    	 			//		
+		//     		Establishing a socket connection and accepting initial parameters   	 	//	
+		//						     		 from the client							     	//
+		//																	     	 			//	
+		//////////////////////////////////////////////////////////////////////////////////////////
+																			  		 			//
+		SOCKET new_connection;	                                                	 			//
+																					 			//
+		while(true)                                                             	 			//
+		{																						//
+			if((new_connection = accept(sListen, (SOCKADDR*)&addr, &nSizeOfADDR)) != false) 	//										 //
+			{																		 			//	
+				//USER_TEMPLATE.compound = new_connection;						 				//
+																					 			//
+				CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ClientHandler, 			 			//
+				(LPVOID)(/*User.size()*/++cnt), 0, 0);											//
+																								//
+				s[cnt] = new_connection;														//
+																					 			//
+				printf("New client her number is %d;\n\n", cnt/*User.size()*/);					//
+																					 			//
+				/*User.push(USER_TEMPLATE);	*/										 			//
+				/*::User.push(USER_TEMPLATE);*/										 			//			
+			}								 										 			//
+																					 			// 
+			Sleep(1);																 			//
+		}																	   		 			//
+																					 			//
+		//////////////////////////////////////////////////////////////////////////////////////////
 	}
 	
 	

@@ -17,8 +17,8 @@ void function()
 {
 	while(true)
 	{
-		if(Client.NewMessage > 0)
-			printf("Message from server: %s;\n\n", Client.GetLastMessage());
+		if(Client.unread() > 0)
+			printf("Message from server: %s;\n\n", Client.get_last_message());
 		
 		Sleep(1);
 	}	
@@ -33,7 +33,7 @@ int main()
 {
 	
 		
-	while(Client.JoinServer("127.0.0.1", 1234) == false)
+	while(Client.join_server("127.0.0.1", 1234) == false)
 			printf("fail join server!!\n");
 	
 	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)function, 0, 0, 0);
@@ -42,7 +42,7 @@ int main()
 	{
 		printf("Writing message: ");
 		cin >> msg;
-		Client.SendMessage(msg);	
+		Client.send_message(msg);	
 	}
 
 	system("pause");

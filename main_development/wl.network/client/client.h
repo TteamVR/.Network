@@ -5,19 +5,17 @@ namespace wl_network
 {
 	class CLIENT
 	{
-	public: 
-			
-		unsigned int NewMessage;
-		
 	private:
 		
 		SOCKET compound;
 		
 	public:
 
-		bool JoinServer(const char *IP, unsigned __int16 port);	
+		bool join_server(const char *IP, unsigned __int16 port);	
 		
-		void SendMessage(const char *Message);
-		char* GetLastMessage();
+		void send_message(const char *message);
+		char* get_last_message();
+		
+		unsigned int unread();	
 	};
 } 

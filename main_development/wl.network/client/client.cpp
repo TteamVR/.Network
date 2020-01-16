@@ -2,9 +2,13 @@
 
 namespace
 {
-	SOCKET 		   compound; 
-	char 		 copy[1024];
-	char  		  msg[1024];
+	char copy[1024];
+	char  msg[1024];	
+}
+
+namespace
+{
+	SOCKET 	 	   compound; 
 	unsigned int NewMessage;
 }
 
@@ -17,7 +21,7 @@ namespace
 			recv(compound, msg, sizeof(msg), 0);	   
 			
 			if(strlen(msg) != 0)			
-				::NewMessage++;				
+				NewMessage++;				
 					
 			Sleep(1/*PAUSE*/);
 		}
@@ -31,7 +35,7 @@ namespace wl_network
 
 	
 	///////////////////////////////////////////////////////////////////////////////////////	
-	bool CLIENT::JoinServer(const char *IP, unsigned __int16 port)						 //	
+	bool CLIENT::join_server(const char *IP, unsigned __int16 port)						 //	
 	{
 	
 		////////////////////////////////////////////////////////////////////
@@ -66,15 +70,15 @@ namespace wl_network
 	
 	
 	///////////////////////////////////////////////////////////////////////////////////////	
-	void CLIENT::SendMessage(const char *Message)										 //
+	void CLIENT::send_message(const char *message)										 //
 	{
-		send(compound, Message, 1024, 0);
+		send(compound, message, 1024, 0);
 	}
 	
 	
 	
 	///////////////////////////////////////////////////////////////////////////////////////	
-	char* CLIENT::GetLastMessage()														 //
+	char* CLIENT::get_last_message()													 //
 	{
 		NewMessage--;	
 			 
@@ -84,6 +88,12 @@ namespace wl_network
 	}
 	
 	
+	
+	///////////////////////////////////////////////////////////////////////////////////////	
+	unsigned int CLIENT::unread()
+	{
+		return NewMessage;
+	}
 	
 	//..............................MAIN METHODS - END..................................//
 	

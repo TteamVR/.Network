@@ -3,21 +3,21 @@ using namespace global;
 
 namespace wl_network
 {
-	struct USER{SOCKET compound;};
+	//struct USER{SOCKET compound;};
 	
 	class SERVER
 	{	
 	private:
 		
-		List<USER> 	  User;
-		USER USER_TEMPLATE; 
+		/*List<USER> 	  User;
+		USER USER_TEMPLATE; */
 		
-		const char 		 *IP;
-		unsigned __int8 port;
+		const char 		  *IP;
+		unsigned __int16 port;
 	
 	public: 
 		
-		SERVER(const char *IP, unsigned __int8 port);
+		SERVER(const char *IP, unsigned __int16 port);
 		
 		void Set(); 
 	};

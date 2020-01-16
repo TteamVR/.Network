@@ -10,15 +10,13 @@ List<USER>    User;*/
 
 /////////////////////////////////////
 SOCKET s[10000];				   //
-unsigned int cnt;				   //
+/*unsigned*/ int cnt;			   //
 /////////////////////////////////////
 
-
-SOCKET 	  compound;
 char 	 msg[1024];
 
 ///////////////////////////////////////////////////////////////////////////////////////	
-void ClientHandler(unsigned int index) 												 //						 		  	    
+void ClientHandler(/*unsigned*/ int index) 												 //						 		  	    
 {	
 	int execution_result = 0;	
 
@@ -33,16 +31,16 @@ void ClientHandler(unsigned int index) 												 //
 			printf("client number %d is disconnected;\n", index);  //
 			/////////////////////////////////////////////////////////
 			
-			cnt--;
+			/*cnt--;*/
 			
 			closesocket(/*User[index]*/s[index]/*.compound*/);
 			break;
 		}
 		
-		for(unsigned int ClientCnt = 1; ClientCnt <= cnt/*User.size()*/; ClientCnt++)
+		for(/*unsigned*/ int ClientCnt = 1; ClientCnt <= cnt/*User.size()*/; ClientCnt++)
 		{
 			if(ClientCnt != index)
-			{
+			{		
 				send(/*User[index]*/s[ClientCnt]/*.compound*/, msg, sizeof(msg), 0);
 			}
 		}		
